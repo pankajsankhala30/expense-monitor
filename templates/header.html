@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Expense Monitor</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/bootstrap.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+</head>
+
+<header style="margin-bottom: 50px;">
+
+<nav class="navbar navbar-default navbar-fixed-top" >
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" rel="home" href="/" title="Expense Monitor">
+        	<img style="margin-top: -7px; display:inline;" height="35" src="{{ url_for('static', filename='images/EMtextlong.png') }}"><b style="display:inline; font-size: 9px; color: #b5b5b5; position: relative; bottom: 2px;">[BETA]</b>
+    	  </a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+
+          <ul class="nav navbar-nav navbar-right" style="margin-left: -6px;">
+          	{% if session.logged_in %}
+            <li class="dropdown" >
+              <a href="#" class="dropdown-toggle" style="color: #337ab7; " data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                {% if session.username == 'sidaartha' %}
+                    <img width="25" height="25" style="border-radius: 200px; margin-top: -5px; margin-bottom: -3px;" src="{{ url_for('static', filename='images/Sid.jpeg') }}">
+                {% elif session.sex == 'Male' %}
+                    <img width="25" height="25" style="border-radius: 200px; margin-top: -5px; margin-bottom: -3px;" src="{{ url_for('static', filename='images/Avatar-m.jpg') }}">
+                {% elif session.sex == 'Female' %}
+                    <img width="25" height="25" style="border-radius: 200px; margin-top: -5px; margin-bottom: -3px;" src="{{ url_for('static', filename='images/Avatar-f.jpg') }}">
+                {% else %}
+                    <span style="padding: 5px; font-size: 13px; border-radius: 50%; background-color: #337ab7; color: white;" class="glyphicon glyphicon-user"></span>
+                {% endif %}
+                &nbsp;{{session.username | CAP}} <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li ><a href="/user/{{session.username}}/"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;My Account</a></li>
+<!--                 {% if session.mode == 'dark' %}
+                    <li><a href="/LightMode/"><span class="glyphicon glyphicon-adjust"></span>&nbsp;&nbsp;Light/Dark
+                {% else %}
+                    <li><a href="/DarkMode/"><span class="glyphicon glyphicon-adjust"></span>&nbsp;&nbsp;Light/Dark
+                {% endif %}
+                    <label class="switch" style="position: relative; top: 8px; left: 14px;">
+                        {% if session.mode == 'dark' %}
+                            <input type="checkbox" checked>
+                        {% else %}
+                            <input type="checkbox">
+                        {% endif %}
+                      <span class="slider round"></span>
+                    </label>
+                    <p style="font-size: 6px; padding: 0px; margin: 0px; margin-left: 22px;">Comming Soon!</p></a></li> -->
+                <li><a href="/user/change-password/"><span class="glyphicon glyphicon-refresh"></span>&nbsp;&nbsp;Change Password</a></li>
+                <li><a href="/user/switch/"><span class="glyphicon glyphicon-sort" style="transform: rotate(90deg);"></span>&nbsp;&nbsp;Switch Account</a></li>
+                <hr style="margin-bottom: 4px; margin-top: 4px;">
+                <li><a href="/logout/" style="color: #d43f3a;"><span class="glyphicon glyphicon-log-out"></span>&nbsp;&nbsp;Sign Out</a></li>
+              </ul>
+            </li>
+            {% else %}
+            <li><a href="/login/" style="color: #337ab7;"> <span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+            <li><a href="/register/" style="color: #d43f3a;"><span class="glyphicon glyphicon-pencil"></span> Sign up</a></li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+</header>
+
+
+{% if session.mode == 'dark' %}
+    <body style="background-color: #20262e;">
+{% else %}
+    <body>
+{% endif %}
+
+	<div class="border-row" style="width:100%; margin-bottom: 15px;"> </div>
+	<!-- Flashed messages and actual body content -->
+	<div class="container" style="min-height:100%; margin-bottom: 100px;">
+		{% with messages = get_flashed_messages() %}
+		  {% if messages %}
+			{% for message in messages %}
+			<div class="row">
+				<div class="col-md-2"></div>
+				<div class="col-md-8">
+			
+			{% if "type" in message %}
+				  <div class="alert alert-{{message[1]}} alert-dismissible" role="alert">
+					  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					  {{ message[2] }}
+				  </div>
+			
+			{% else %}
+			
+				  <div class="alert alert-warning alert-dismissible" role="alert">
+					  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					  {{ message }}
+				  </div>
+			{% endif %}
+				</div>
+			</div>
+			
+			{% endfor %}
+		  {% endif %}
+		{% endwith %}
+	
+		{% block body %}{% endblock %}
+		
+	</div>
+	
+	<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <script type="text/javascript">
+        $('a[data-toggle="tab"]').click(function (e) {
+            e.preventDefault();
+            $(this).tab('show');
+        });
+
+        $('a[data-toggle="tab"]').on("shown.bs.tab", function (e) {
+            var id = $(e.target).attr("href");
+            localStorage.setItem('selectedTab', id)
+        });
+
+        var selectedTab = localStorage.getItem('selectedTab');
+        if (selectedTab != null) {
+            $('a[data-toggle="tab"][href="' + selectedTab + '"]').tab('show');
+        }
+    </script>
+</body>
+	
+
+<div class="footer-container" style="background-color: #ececec">
+<footer id="footer">
+<div class="footer-container" >
+    <div class="container">
+    <div style="padding-top: 10px;">
+    	<div class="col-md-4">
+			<!-- <div class="container" style="margin-left: 10px; margin-bottom: -10px;"> -->
+	       		<h3 class="text-center" style="font-weight:normal;margin-left: 0px; white-space: nowrap; font-size: 22px;"><img width="28" height="28" style="border-radius: 200px; margin-top: -5px; margin-right: 4px;" src="{{ url_for('static', filename='images/Sid.jpeg') }}"> Made by <b>Sidaartha Reddy</b>.</h3 font-weight:normal;>
+	      	<!-- </div> -->
+	    </div>
+	    <div class="col-md-6"></div>
+		<div class="col-md-2">
+			<!-- <div class="container" style="margin-left: 10px; margin-bottom: -10px;"> -->
+	       		<span class="text-center" ><h3 style="font-weight:normal; font-size: 20px; padding-top: 2px;"> <a href="/About/" style="text-decoration: none;">About</a>&nbsp;&nbsp;<b style="color: gray; font-size: 18px;">|</b>&nbsp;&nbsp;<a href="/Contact/" style="text-decoration: none;">Contact</a></h3></span>
+	      	<!-- </div> -->
+	    </div>
+	</div>
+        <div class="footer-lower">
+            <div class="media-container-row">
+                <div class="col-md-12">
+                    <hr style="border-color: white; border-width: 2px;">
+                </div>
+            </div>
+            <div class="media-container-row mbr-white">
+                <div class="col-md-5 copyright">
+                	<div class="text-center">
+                    <p class="mbr-text mbr-fonts-style display-7 foot-text" style="color: #337ab7; ">
+                        Copyright © 2019 Expense Monitor, Inc. All rights reserved.
+                    </p>
+                    </div>
+                </div>
+                <div class="col-md-5"></div>
+				<div class="col-md-2">
+                    <div class="text-center" style="margin-bottom: 10px; ">
+                        <div>
+
+                            <a href="https://github.com/Sidaartha" target="_blank">
+                                <span class="fa fa-github" media-simple="true" style="font-size: 25px; color: #337ab7;"></span>
+                            </a>&nbsp;&nbsp;
+
+                            <a href="https://www.facebook.com/Sidaartha.Reddy" target="_blank">
+                                <span class="fa fa-facebook" media-simple="true" style="font-size: 23px; color: #337ab7;"></span>
+                            </a>&nbsp;&nbsp;
+
+                            <a href="https://www.instagram.com/sidaartha/" target="_blank">
+                                <span class="fa fa-instagram" media-simple="true" style="font-size: 25px; color: #337ab7;"></span>
+                            </a>&nbsp;&nbsp;
+
+                            <a href="https://www.linkedin.com/in/sidaartha/" target="_blank">
+                                <span class="fa fa-linkedin" media-simple="true" style="font-size: 25px; color: #337ab7;"></span>
+                            </a>                
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+	</footer>
+	</div>
+
+
+</html>

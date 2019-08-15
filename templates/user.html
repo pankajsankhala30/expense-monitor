@@ -1,0 +1,62 @@
+{% extends "header.html" %}
+{% block body %}
+	
+	<body>
+		<h1 style="margin-top: 25px;" >Your account</h1>
+		<div class="col-md-3" style="margin-left: -10px;">
+            {% if session.username == 'sidaartha' %}
+                <img style="margin-top: 25px;" width="235" src="{{ url_for('static', filename='images/Sid.jpeg') }}">			
+			{% elif info[2] == 'Male' %}
+				<img style="margin-top: 25px;" width="235" src="{{ url_for('static', filename='images/Avatar-m.jpg') }}">
+			{% elif info[2] == 'Female' %}
+				<img style="margin-top: 25px;" width="235" src="{{ url_for('static', filename='images/Avatar-f.jpg') }}">
+			{% else %}
+				<img style="margin-top: 25px;" width="235" src="{{ url_for('static', filename='images/Avatar.png') }}">
+			{% endif %}
+			<h4 style="color: grey; margin-left: 6px;"><span style="position: relative; bottom: -1px; right: 3px;">@</span>{{session.username}}</h4>
+		</div>
+		<div class="col-md-6" style="margin-left: -10px;">
+			{% if info[1] %}
+				<h5 style="font-weight: 300; margin-top: 22px;">Your name</h5><span style="font-size: 16px; font-weight: 500;">{{ info[1]}}</span>
+				<a data-toggle="collapse" data-target="#demo1" style="text-decoration: none; cursor: pointer; border-radius: 20px; font-size: 12px; margin-left: 4px;"><span class="glyphicon glyphicon-pencil" style="padding-left: 2px; padding-bottom:2px; color: #337ab7;" ></span></a>
+	            <div id="demo1" class="collapse" style="margin-top: 10px;">
+	              <form action="" class="form-inline" method="post">
+	                <input type="text" class="form-control" placeholder="Full name" name="name" value="{{ request.form.name }}" style="width: 100px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; margin-right: -5px; font-size: 10px; padding: 5px; height: 25px;" required>
+	                <input class="btn btn-primary" type="submit" name="name" value="Change" style="width: 50px; border-top-left-radius: 0px; border-bottom-left-radius: 0px; font-size: 10px; padding: 5px; height: 25px;">
+	              </form>
+	            </div>
+			{% else %}
+				<h5 style="font-weight: 300; margin-top: 22px;">Your name</h5><span style="font-size: 16px; font-weight: 500;">{{session.username | CAP}}</span>
+				<a data-toggle="collapse" data-target="#demo1" style="text-decoration: none; cursor: pointer; border-radius: 20px; font-size: 12px; margin-left: 4px;"><span class="glyphicon glyphicon-pencil" style="padding-left: 2px; padding-bottom:2px; color: #337ab7;" ></span></a>
+	            <div id="demo1" class="collapse" style="margin-top: 10px;">
+	              <form action="" class="form-inline" method="post">
+	                <input type="text" class="form-control" placeholder="Full name" name="name" value="{{ request.form.name }}" style="width: 100px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; margin-right: -5px; font-size: 10px; padding: 5px; height: 25px;" required>
+	                <input class="btn btn-primary" type="submit" name="name" value="Change" style="width: 50px; border-top-left-radius: 0px; border-bottom-left-radius: 0px; font-size: 10px; padding: 5px; height: 25px;">
+	              </form>
+	            </div>
+			{% endif %}
+			<h5 style="font-weight: 300; margin-top: 17px;">Your email address</h5><span style="font-size: 16px; font-weight: 500;">{{info[4]}}</span>
+			<h5 style="font-weight: 300; margin-top: 17px;">Your phone number</h5><span style="font-size: 16px; font-weight: 500;">{{info[5]}}</span>
+			<a data-toggle="collapse" data-target="#demo2" style="text-decoration: none; cursor: pointer; border-radius: 20px; font-size: 12px; margin-left: 4px;"><span class="glyphicon glyphicon-pencil" style="padding-left: 2px; padding-bottom:2px; color: #337ab7;" ></span></a>
+            <div id="demo2" class="collapse" style="margin-top: 10px;">
+              <form action="" class="form-inline" method="post">
+                <input type="text" class="form-control" placeholder="Phone Number" name="number" value="{{ request.form.number }}" style="width: 100px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; margin-right: -5px; font-size: 10px; padding: 5px; height: 25px;" required>
+                <input class="btn btn-primary" type="submit" name="number" value="Change" style="width: 50px; border-top-left-radius: 0px; border-bottom-left-radius: 0px; font-size: 10px; padding: 5px; height: 25px;">
+              </form>
+            </div>
+			<h5 style="font-weight: 300; margin-top: 17px;">Gender</h5><span style="font-size: 16px; font-weight: 500;">{{info[2]}}</span>
+			<a data-toggle="collapse" data-target="#demo3" style="text-decoration: none; cursor: pointer; border-radius: 20px; font-size: 12px; margin-left: 4px;"><span class="glyphicon glyphicon-pencil" style="padding-left: 2px; padding-bottom:2px; color: #337ab7;" ></span></a>
+            <div id="demo3" class="collapse" style="margin-top: 10px;">
+              <form action="" class="form-inline" method="post">
+	          <select class="form-control" id=",mode" name="comp_select" style="background-color: white; height: 25px; border: 1px solid #ddd; margin-right: -9px;">
+		          <option value="Male" >Male</option>
+		          <option value="Female">Female</option>
+		          <option value="Other">Other</option>
+		        </select>
+                <input class="btn btn-primary" type="submit" name="sex" value="Change" style="width: 50px; border-top-left-radius: 0px; border-bottom-left-radius: 0px; font-size: 10px; padding: 5px; height: 25px;">
+              </form>
+            </div>
+		</div>
+	 </body>
+
+{% endblock %}

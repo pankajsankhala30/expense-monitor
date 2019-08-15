@@ -1,0 +1,25 @@
+{% extends "header.html" %}
+{% block body %}
+
+<body>
+    <div class="container" style="max-width:300px; margin-top: 100px;">
+      <!-- <h3 class="form-signin-heading">Please login</h3> -->
+    <div class="text-center">
+
+      <form action="" class="form-signin" method="post">
+        <h1 class="h3 mb-3 font-weight-normal" style="margin-bottom: 15px">Change Password</h1>
+        <div>
+          <input type="password" class="form-control" style=" margin-bottom: -1px; border-bottom-right-radius: 0; border-bottom-left-radius: 0; padding: 20px;" placeholder="Old Password" name="password" value="{{ request.form.password }}">
+          <input type="password" class="form-control" style=" margin-bottom: -1px; border-bottom-right-radius: 0; border-bottom-left-radius: 0; border-top-right-radius: 0; border-top-left-radius: 0; padding: 20px;" placeholder="New Password" name="npassword" value="{{ request.form.npassword }}">
+          <input type="password" class="form-control" style=" margin-bottom: 10px; border-top-right-radius: 0; border-top-left-radius: 0; padding: 20px;" placeholder="Repeat Password" name="rpassword" value="{{ request.form.rpassword }}">
+        </div class='form-group'>
+        <input class="btn btn-lg btn-primary btn-block" style="padding-top: 10px; padding-right: 16px; padding-bottom: 10px; padding-left: 16px;" type="submit" value="Submit">
+      </form>
+    {% if error %}
+      <p class="error"><strong>Error:</strong> {{ error }}</p>
+    {% endif %}
+    </div>
+    </div>
+</body>
+
+{% endblock %}

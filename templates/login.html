@@ -1,0 +1,36 @@
+{% extends "header.html" %}
+{% block body %}
+
+<body>
+    <div class="container" style="max-width:300px; margin-top: 100px;">
+      <!-- <h3 class="form-signin-heading">Please login</h3> -->
+    <div class="text-center">
+
+      <form action="" class="form-signin" method="post">
+        <a rel="home" href="/" title="Expence Moniter ">
+          <img class="mb-4" style="margin-top: 10px; margin-bottom: -10px" src="{{ url_for('static', filename='images/EMsq.png') }}" width="40%">
+        </a>
+        <h1 class="h3 mb-3 font-weight-normal" style="margin-bottom: 15px">Please login</h1>
+        <div>
+          <input type="text" class="form-control" style=" margin-bottom: -1px; border-bottom-right-radius: 0; border-bottom-left-radius: 0; padding: 20px;" placeholder="Username" name="username" value="{{ request.form.username }}">
+          <input type="password" class="form-control" style=" margin-bottom: 10px; border-top-right-radius: 0; border-top-left-radius: 0; padding: 20px;" placeholder="Password" name="password" value="{{ request.form.password }}">
+        </div class='form-group'>
+        <div class="checkbox" style=" min-height: 20px; font-weight: 400; cursor: pointer;">
+          <label style="font-size: 14px;">
+            <input type="checkbox" value="remember-me"> Remember me
+          </label>
+        </div>
+        <input class="btn btn-lg btn-primary btn-block" style="padding-top: 10px; padding-right: 16px; padding-bottom: 10px; padding-left: 16px;" type="submit" value="Login">
+        <div class="mt-5 mb-3 text-muted" style="margin-top: 40px;">© 2019</div>
+      </form>
+    {% if error %}
+      <p class="error"><strong>Error:</strong> {{ error }}</p>
+      <div style="margin-top: -10%;">
+        <br><p>No account? <a href='/register'>Register here</a>.</p><br>
+      </div>
+    {% endif %}
+    </div>
+    </div>
+</body>
+
+{% endblock %}

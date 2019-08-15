@@ -1,0 +1,28 @@
+{% macro render_field(field) %}
+  {% if field.name == 'accept_tos' %}
+    <div style="margin-top: 13px; margin-bottom: -10px;"> {{ field(**kwargs)|safe }} {{ field.label }} </div>
+  {% else %}
+<!--     <dt style="margin-top: 10px;">{{ field.label }}
+    <dd>{{ field(class="form-control", style="height: 40px;", **kwargs)|safe }} -->
+
+    <!-- <dt style="margin-top: 10px;">{{ field.label }} -->
+
+    {% if field.name == 'username' %}
+      <dd >{{ field(class="form-control", style=" margin-bottom: -1px; border-bottom-right-radius: 0; border-bottom-left-radius: 0; padding: 20px; height: 40px;", placeholder=field.label.text, **kwargs)|safe }}
+    {% elif field.name == 'confirm' %}
+      <dd >{{ field(class="form-control", style=" margin-bottom: -1px; border-top-right-radius: 0; border-top-left-radius: 0; padding: 20px; height: 40px;", placeholder=field.label.text, **kwargs)|safe }}
+    {% else %}
+      <dd >{{ field(class="form-control", style=" margin-bottom: -1px; border-bottom-right-radius: 0; border-bottom-left-radius: 0; border-top-right-radius: 0; border-top-left-radius: 0; padding: 20px; height: 40px;", placeholder=field.label.text, **kwargs)|safe }}
+    {% endif %}
+
+
+  {% endif %}
+  {% if field.errors %}
+    <h5 style="font-weight: normal; color: red;">
+    {% for error in field.errors %}
+      {{ error }}
+    {% endfor %}
+    </h5>
+  {% endif %}
+  </dd>
+{% endmacro %}
